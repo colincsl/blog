@@ -19,16 +19,16 @@ To start I will give an overview of Conditional Random Fields (CRFs). CRFs are i
 
 <!-- To start I will give an overview of Conditional Random Fields (CRFs). CRFs are incredibly general and have widespread use in vision, robotics, and beyond. There are three necessary components: first, we must define a **model**. This is a definition of what information we know (e.g. data), what information we want to infer (e.g. labels/states), and how it all connects. This is often defined as a graph structure where nodes represent data/states and edges represent the connections between the data. Second, we need a way of performing **inference**; how can we determine which states most likely compute the best labeling given a set of data. Third, we must **learn** how much to weigh each of the connections in our graph. -->
 
-We will use two motivating examples throughout: a Linear Chain CRF and an (irregular) Graph CRF as shown below. In the diagrams Colored circles represent labels (e.g. of class red and blue) and the white squares represent data points. Linear chain models are very common for working with time series data. The key assumption is that the label at each timestep is dependent only on the current data term and the previous label in time. Graph CRFs are commonly used for problems like Semantic Segmentation where you may have a set of segments in an image and want to infer what object each segment refers to.
+We will use two motivating examples throughout: a Linear Chain CRF and an (irregular) Graph CRF as shown below. In the diagrams colored circles represent labels (e.g. of class red and blue) and the white squares represent data points. Linear chain models are very common for working with time series data. The key assumption is that the label at each timestep is dependent only on the current data term and the previous label in time. Graph CRFs are commonly used for problems like Semantic Segmentation where you may have a set of segments in an image and want to infer what object each segment refers to.
 
-<!--<center>-->
-![Linear Chain CRF](https://lh6.googleusercontent.com/-K2KUQYbOAi0/VOJmNDkrwqI/AAAAAAAAFJQ/4gPkC0Ag6co/s400/Screenshot+2015-02-16+16.49.37.png "Linear Chain CRF") 
-Linear Chain Conditional Random Field
-<!--</center>-->
-<!--<center>-->
-![Graph CRF](https://lh6.googleusercontent.com/-ylh-Ok2PQ_A/VOJmEdpihWI/AAAAAAAAFJE/XEroJ5harss/s400/Screenshot+2015-02-16+16.47.33.png "Graph CRF")
- Graph Conditional Random Field
-<!--</center>-->
+
+->![Linear Chain CRF](https://lh6.googleusercontent.com/-K2KUQYbOAi0/VOJmNDkrwqI/AAAAAAAAFJQ/4gPkC0Ag6co/s400/Screenshot+2015-02-16+16.49.37.png "Linear Chain CRF")<-
+
+->Linear Chain Conditional Random Field<-
+
+->![Graph CRF](https://lh6.googleusercontent.com/-ylh-Ok2PQ_A/VOJmEdpihWI/AAAAAAAAFJE/XEroJ5harss/s400/Screenshot+2015-02-16+16.47.33.png "Graph CRF")<-
+
+ ->Graph Conditional Random Field<-
 
 The focus of this post will be on the model definition but I will also discuss learning and inference. 
 
@@ -39,13 +39,13 @@ Let's start by modeling individual connections between nodes. In the linear chai
 
 In the Graph CRF we include a connection between multiple labels $$\gamma(Y_{i:j})$$. This is called a higher-order potential. In another example, we could model a triplet of labels from time $$t-2$$ to $$t$$ in a linear chain CRF. Typically inference and learning with higher order potentials is more complex computationally and memory-wise than with unary and pairwise.  
 
-In the end we want to predict the best scoring labels for a whole network as opposed to the score from each individual potential. This means we need to define an energy function that takes in all of the potentials. For clarity let's first define an abstract potential $$\Psi_i$$ which will be an arbitrary potential type with index $$i$$. We define the probability distribution for each potential using the exponential distribution $$P(Y_i|X_i) \propto \exp(w^T\Psi_i(X_i, Y_i))$$ where $$w$$ is a weight vector (classifier) that is learned. $$w$$ defines how important each of the features is for a given class.
+In the end we want to predict the best scoring labels for a whole network as opposed to the score from each individual potential. This means we need to define an energy function that takes in all of the potentials. For clarity let's first define an abstract potential $$\Psi_i$$ which will be an arbitrary potential type with index $$i$$. We define the probability distribution for each potential using the exponential distribution $$P(Y_i \vert| X_i) \propto \exp(w^T\Psi_i(X_i, Y_i))$$ where $$w$$ is a weight vector (classifier) that is learned. $$w$$ defines how important each of the features is for a given class.
 
 For the whole CRF, we model the conditional distribution of the labels $$Y$$ given the data $$X$$ and weight vector (classifier) $$w$$ as a Gibbs distribution:
-<center>$$P(Y|X) = \frac{1}{Z} \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$</center>
+<center>$$P(Y \vert| X) = \frac{1}{Z} \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$</center>
 This expression is extremely general and implies that the probability of the labels given the data is proportional to the product of the probabilities of each potential. Here we assume there are $$M$$ potentials. In the linear chain case we can define this to be the number of timesteps where $$\Psi_i$$ is now a combination of the unary and pairwise potentials at time $$t$$:  $$\Psi_i(X, Y) = [\phi(X_t, Y_t), \psi(Y_t, Y_{t-1})]$$.
 
-The term $$Z$$ in the previous expression is the normalization term and represents every possible configuration of the labels. For inferring the most likely sequence $$Y_{1:T}$$, and under certain regimes of learning, we only care about inferring the most likely output $$\hat{Y}$$. In these cases we never need to explicitly compute $$Z$$. Thus we can write $$P(Y|X) \propto \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$.
+The term $$Z$$ in the previous expression is the normalization term and represents every possible configuration of the labels. For inferring the most likely sequence $$Y_{1:T}$$, and under certain regimes of learning, we only care about inferring the most likely output $$\hat{Y}$$. In these cases we never need to explicitly compute $$Z$$. Thus we can write $$P(Y \vert| X) \propto \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$.
 
 **To recap:**
  - **Unary** ($$\phi(X_i, Y_i)$$): the cost of some data $$X_i$$ paired with a specific label $$Y_i$$.
@@ -61,7 +61,7 @@ In order to perform inference in a CRF we need a set of parameter vectors $$w$$ 
 <!--
 Probabilistic 
 A common method is to Maximum Likelihood
-$$w = \underset{w}{\arg\max{}} \prod_{i=1}^N P(Y^{(i)}|X^{(i)}; w)$$
+$$w = \underset{w}{\arg\max{}} \prod_{i=1}^N P(Y^{(i)} \vert| X^{(i)}; w)$$
 $$w^t = w^{t-1} + \alpha p $$
 
 Structural Support Vector Machine
@@ -75,7 +75,7 @@ In the future I will write about some of these methods. It took me a while to fu
 ##Inference
 Inference is perhaps the most model-specific of the three components of a CRF. In abstract, we want to find the best labels $$Y$$ given some data $$X$$.
 <center>
-$$\hat{Y} = \underset{Y}{\arg\max{}} P(Y | X)$$
+$$\hat{Y} = \underset{Y}{\arg\max{}} P(Y \vert| X)$$
 </center>
 
 
