@@ -7,6 +7,8 @@ title: Introduction to Conditional Random Fields
 src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
+# THIS POST IS IN PROGRESS. IT'S ONLY ONLINE SO I CAN TEST OUT JEKYLL W/ J/MATHJAX
+
 *Note: this overview is not going to satisfy everybody, but should give a good enough guide for someone getting started. I'm sure there are whole research areas that I am neglecting.* 
 
 It's been a long time since I've written any blog posts. I'm going to start a series of posts talking about structured prediction. The focus will mostly be on time series models targeted at vision applications -- however many of the ideas will be much more far reaching. In the future I will touch on some specific models (e.g. Skip Chain CRF, Semi Markov CRF, Latent CRF), methods of learning (e.g. for solving Structural SVMs), and various other ideas relating to structured prediction. In addition, at some point I will be releasing my structured prediction library *struct.jl* that I have been writing in Julia. 
@@ -22,13 +24,13 @@ To start I will give an overview of Conditional Random Fields (CRFs). CRFs are i
 We will use two motivating examples throughout: a Linear Chain CRF and an (irregular) Graph CRF as shown below. In the diagrams colored circles represent labels (e.g. of class red and blue) and the white squares represent data points. Linear chain models are very common for working with time series data. The key assumption is that the label at each timestep is dependent only on the current data term and the previous label in time. Graph CRFs are commonly used for problems like Semantic Segmentation where you may have a set of segments in an image and want to infer what object each segment refers to.
 
 
-<center>![Linear Chain CRF](https://lh6.googleusercontent.com/-K2KUQYbOAi0/VOJmNDkrwqI/AAAAAAAAFJQ/4gPkC0Ag6co/s400/Screenshot+2015-02-16+16.49.37.png "Linear Chain CRF")</center>
+![Linear Chain CRF](https://lh6.googleusercontent.com/-K2KUQYbOAi0/VOJmNDkrwqI/AAAAAAAAFJQ/4gPkC0Ag6co/s400/Screenshot+2015-02-16+16.49.37.png "Linear Chain CRF")
 
 <center> Linear Chain Conditional Random Field </center>
 
 ![Graph CRF](https://lh6.googleusercontent.com/-ylh-Ok2PQ_A/VOJmEdpihWI/AAAAAAAAFJE/XEroJ5harss/s400/Screenshot+2015-02-16+16.47.33.png "Graph CRF")
 
- ->Graph Conditional Random Field<-
+ <center>Graph Conditional Random Field</center>
 
 The focus of this post will be on the model definition but I will also discuss learning and inference. 
 
