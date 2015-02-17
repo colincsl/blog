@@ -3,6 +3,10 @@ layout: post
 title: Introduction to Conditional Random Fields
 ---
 
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 *Note: this overview is not going to satisfy everybody, but should give a good enough guide for someone getting started. I'm sure there are whole research areas that I am neglecting.* 
 
 It's been a long time since I've written any blog posts. I'm going to start a series of posts talking about structured prediction. The focus will mostly be on time series models targeted at vision applications -- however many of the ideas will be much more far reaching. In the future I will touch on some specific models (e.g. Skip Chain CRF, Semi Markov CRF, Latent CRF), methods of learning (e.g. for solving Structural SVMs), and various other ideas relating to structured prediction. In addition, at some point I will be releasing my structured prediction library *struct.jl* that I have been writing in Julia. 
