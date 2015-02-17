@@ -9,7 +9,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
 # THIS POST IS IN PROGRESS. IT'S ONLY ONLINE SO I CAN TEST OUT JEKYLL W/ J/MATHJAX
 
-It's been a long time since I've written any blog posts. I'm going to start a series talking about structured prediction. The focus will mostly be on time series models targeted at vision applications -- however many of the ideas will be much more far reaching. In the future I will touch on some specific models (e.g. Skip Chain CRF, Semi Markov CRF, Latent CRF), methods of learning (e.g. for solving Structural SVMs), and various other ideas relating to structured prediction. In addition, at some point I will be releasing my structured prediction library *struct.jl* that I have been writing in Julia. 
+It's been a long time since I've written any blog posts. I'm going to start a series talking about structured prediction. The focus will mostly be on time series models targeted at vision applications -- however many of the ideas will be much more far reaching. In the future I will touch on some specific models (e.g. Skip Chain CRF, Semi Markov CRF, Latent CRF), methods of learning (e.g. for solving Structural SVMs), and various other ideas relating to structured prediction. In addition, at some point I will release my structured prediction library *struct.jl* that I have been writing in Julia. 
 
 To start I will give an overview of Conditional Random Fields (CRFs). CRFs are incredibly general and have widespread use in vision, robotics, and beyond. There are three necessary components for understanding and implementing CRFs: 
 
