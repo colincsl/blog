@@ -50,6 +50,7 @@ The term $$Z$$ in the previous expression is the normalization term and represen
 Note that we for clarity we have overloaded the weight vector (classifier) $$w$$. There is a separate vector $$w_c$$ that corresponds to each class. Moreover, each In our notation we use a single variable $$w$$ due to the 
 
 **To recap:**
+
  - **Unary** ($$\phi(X_i, Y_i)$$): the cost of some data $$X_i$$ paired with a specific label $$Y_i$$.
  - **Pairwise** ($$\psi(Y_i, Y_j)$$): the cost of two labels $$Y_i$$ and $$Y_j$$ being connected.
  - **Higher-order** ($$\gamma(Y_{i:j}, X_{i:j})$$): the cost of a group of nodes.
