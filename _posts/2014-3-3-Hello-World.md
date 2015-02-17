@@ -22,11 +22,11 @@ To start I will give an overview of Conditional Random Fields (CRFs). CRFs are i
 We will use two motivating examples throughout: a Linear Chain CRF and an (irregular) Graph CRF as shown below. In the diagrams colored circles represent labels (e.g. of class red and blue) and the white squares represent data points. Linear chain models are very common for working with time series data. The key assumption is that the label at each timestep is dependent only on the current data term and the previous label in time. Graph CRFs are commonly used for problems like Semantic Segmentation where you may have a set of segments in an image and want to infer what object each segment refers to.
 
 
-->![Linear Chain CRF](https://lh6.googleusercontent.com/-K2KUQYbOAi0/VOJmNDkrwqI/AAAAAAAAFJQ/4gPkC0Ag6co/s400/Screenshot+2015-02-16+16.49.37.png "Linear Chain CRF")<-
+<center>![Linear Chain CRF](https://lh6.googleusercontent.com/-K2KUQYbOAi0/VOJmNDkrwqI/AAAAAAAAFJQ/4gPkC0Ag6co/s400/Screenshot+2015-02-16+16.49.37.png "Linear Chain CRF")</center>
 
-->Linear Chain Conditional Random Field<-
+<center> Linear Chain Conditional Random Field </center>
 
-->![Graph CRF](https://lh6.googleusercontent.com/-ylh-Ok2PQ_A/VOJmEdpihWI/AAAAAAAAFJE/XEroJ5harss/s400/Screenshot+2015-02-16+16.47.33.png "Graph CRF")<-
+![Graph CRF](https://lh6.googleusercontent.com/-ylh-Ok2PQ_A/VOJmEdpihWI/AAAAAAAAFJE/XEroJ5harss/s400/Screenshot+2015-02-16+16.47.33.png "Graph CRF")
 
  ->Graph Conditional Random Field<-
 
