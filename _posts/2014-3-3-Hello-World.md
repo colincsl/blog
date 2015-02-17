@@ -39,13 +39,13 @@ Let's start by modeling individual connections between nodes. In the linear chai
 
 In the Graph CRF we include a connection between multiple labels $$\gamma(Y_{i:j})$$. This is called a higher-order potential. In another example, we could model a triplet of labels $$Y_{t-2:2}$$ from time $$t-2$$ to $$t$$ in a linear chain CRF. Typically inference and learning with higher order potentials is more complex computationally and memory-wise than with just unary and pairwise terms.  
 
-In the end we want to predict the best scoring labels for a whole network as opposed to the score from each individual potential. This means we need to define an energy function that takes in all of the potentials. For clarity let's first define an abstract potential $$\Psi_i$$ of arbitrary potential type with index $$i$$. We define the probability distribution for each potential using the exponential distribution $$P(Y_i\vertX_i) \propto \exp(w^T\Psi_i(X_i, Y_i))$$ where $$w$$ is a weight vector (classifier) that is learned. $$w$$ defines how important each of the features is for a given class.
+In the end we want to predict the best scoring labels for a whole network as opposed to the score from each individual potential. This means we need to define an energy function that takes in all of the potentials. For clarity let's first define an abstract potential $$\Psi_i$$ of arbitrary potential type with index $$i$$. We define the probability distribution for each potential using the exponential distribution $$P(Y_i \vert X_i) \propto \exp(w^T\Psi_i(X_i, Y_i))$$ where $$w$$ is a weight vector (classifier) that is learned. $$w$$ defines how important each of the features is for a given class.
 
 For the whole CRF, we model the conditional distribution of the labels $$Y$$ given the data $$X$$ and weight vector (classifier) $$w$$ as a Gibbs distribution:
-<center>$$P(Y\vertX) = \frac{1}{Z} \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$</center>
+<center>$$P(Y \vert X) = \frac{1}{Z} \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$</center>
 This expression is extremely general and implies that the probability of the labels given the data is proportional to the product of the probabilities of each potential. Here we assume there are $$M$$ potentials. In the linear chain case we can define this to be the number of timesteps where $$\Psi_i$$ is now a combination of the unary and pairwise potentials at time $$t$$:  $$\Psi_i(X, Y) = [\phi(X_t, Y_t), \psi(Y_t, Y_{t-1})]$$.
 
-The term $$Z$$ in the previous expression is the normalization term and represents every possible configuration of the labels. For inferring the most likely sequence $$Y_{1:T}$$, and under certain regimes of learning, we only care about inferring the most likely output $$\hat{Y}$$. In these cases we never need to explicitly compute $$Z$$. Thus we can write $$P(Y\vertX) \propto \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$.
+The term $$Z$$ in the previous expression is the normalization term and represents every possible configuration of the labels. For inferring the most likely sequence $$Y_{1:T}$$, and under certain regimes of learning, we only care about inferring the most likely output $$\hat{Y}$$. In these cases we never need to explicitly compute $$Z$$. Thus we can write $$P(Y \vert X) \propto \prod_{i=1}^M \exp(w^T \Psi_i(X, Y))$$.
 
 Note that we for clarity we have overloaded the weight vector (classifier) $$w$$. There is a separate vector $$w_c$$ that corresponds to each class. Moreover, each In our notation we use a single variable $$w$$ due to the 
 
@@ -62,7 +62,7 @@ In order to perform inference in a CRF we need the parameter vectors $$w$$ that 
 <!--
 Probabilistic 
 A common method is to Maximum Likelihood
-$$w = \underset{w}{\arg\max{}} \prod_{i=1}^N P(Y^{(i)}\vertX^{(i)}; w)$$
+$$w = \underset{w}{\arg\max{}} \prod_{i=1}^N P(Y^{(i)} \vert X^{(i)}; w)$$
 $$w^t = w^{t-1} + \alpha p $$
 
 Structural Support Vector Machine
